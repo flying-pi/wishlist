@@ -1,0 +1,45 @@
+version: '3'
+services:
+  db:
+    image: postgres:12.1
+    restart: always
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    env_file:
+      - envs/env
+
+  backend:
+    image: wishlist/backend
+    build:
+      context: ./backend
+      dockerfile: backend.Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./backend:/app
+    env_file:
+      - envs/env
+#    command: "./manage.py runserver 0.0.0.0:8080"
+    command: bash -c "while true; do foo; sleep 2; done"
+    links:
+      - db
+
+  front:
+    image: wishlist/front
+    build:
+      context: ./front
+      dockerfile: front.Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./front/wishlist_front:/app
+    env_file:
+      - envs/env
+    links:
+      - backend
+#    command: "yarn start"
+    command:  bash -c "while true; do foo; sleep 2; done"
+
+
+volumes:
+  pgdata:

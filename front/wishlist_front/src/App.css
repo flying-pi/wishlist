@@ -1,0 +1,209 @@
+.App {
+    text-align: center;
+}
+
+.App-logo {
+    height: 40vmin;
+    pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+        animation: App-logo-spin infinite 20s linear;
+    }
+}
+
+.App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+}
+
+.App-link {
+    color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #272727;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+}
+
+#root {
+    overflow: auto;
+}
+
+body {
+    position: fixed;
+    overflow: hidden;
+    overscroll-behavior-y: none;
+    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+    color: black;
+}
+
+.main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: white;
+    overflow: hidden;
+}
+
+span.header {
+    font-family: 'Playfair Display', serif;
+    position: absolute;
+    display: inline-block;
+    width: 500px;
+    top: 50%;
+    transform: translate3d(0, -50%, 0);
+    left: 2em;
+    font-size: 8em;
+    line-height: 1em;
+}
+
+@media only screen and (max-width: 750px) {
+    span.header {
+        top: 250px;
+        left: 50px;
+        font-size: 6em;
+        width: 200px;
+    }
+
+    a.bottom-left {
+        display: none;
+    }
+}
+
+a {
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, avenir next, avenir, helvetica neue, helvetica, ubuntu, roboto, noto, segoe ui, arial, sans-serif;
+    position: absolute;
+    font-size: 1.1em;
+    display: inline;
+    text-decoration: none;
+}
+
+a.top-left {
+    top: 50px;
+    left: 50px;
+}
+
+a.top-right {
+    top: 50px;
+    right: 50px;
+}
+
+a.bottom-left {
+    bottom: 50px;
+    left: 50px;
+}
+
+a.bottom-right {
+    bottom: 50px;
+    right: 50px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.grid {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.grid .item {
+    position: relative;
+    width: 50vw;
+    height: 50vw;
+    background: #eee;
+}
+
+@media only screen and (max-width: 480px) {
+    .grid .item {
+        width: 100vw;
+        height: 100vw;
+    }
+}
+
+.scroll-container {
+    position: absolute;
+    overflow: auto;
+    top: 0px;
+    width: 100%;
+    height: 100vh;
+    font-size: 20em;
+    font-weight: 800;
+    line-height: 0.9em;
+}
+
+
+/*.loginContainer {*/
+/*    font-family: 'Playfair Display', serif;*/
+/*    position:absolute;*/
+/*    left: 0;*/
+/*    top: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*}*/
+
+
+.loginContainer {
+    font-family: 'Playfair Display', serif;
+    right: 15%;
+    left: 15%;
+    top: 20%;
+    position: absolute;
+    /* position: relative; */
+    height: auto;
+    width: auto !important;
+    justify-self: center;
+    align-self: center;
+    padding: 18px;
+    background-color: rgba(255, 255, 255, 0.96);
+}
+
+
+.mainContainerHeader {
+    font-family: 'Playfair Display', serif;
+    top: 0;
+    width: 98vw;
+    padding: 18px;
+    margin: 1vw;
+    background-color: rgba(255, 255, 255, 0.96);
+}
