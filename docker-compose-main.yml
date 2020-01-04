@@ -6,7 +6,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     env_file:
-      - envs/env
+      - envs/wishlist.env
 
   backend:
     image: wishlist/backend
@@ -18,11 +18,26 @@ services:
     volumes:
       - ./backend:/app
     env_file:
-      - envs/env
+      - envs/wishlist.env
 #    command: "./manage.py runserver 0.0.0.0:8080"
-    command: bash -c "while true; do foo; sleep 2; done"
+    command: bash -c "while true; do foo; sleep 20; done"
     links:
       - db
+      - backend_worker
+
+  backend_worker:
+    image: wishlist/backend
+    volumes:
+      - ./backend:/app
+    env_file:
+      - envs/wishlist.env
+    depends_on:
+      - broker
+    command: >
+      bash -c "
+      celery worker --beat --app=wishlist_backend.celery_app --concurrency=4 --hostname=backend_worker@%h --loglevel=INFO
+      "
+
 
   front:
     image: wishlist/front
@@ -34,11 +49,18 @@ services:
     volumes:
       - ./front/wishlist_front:/app
     env_file:
-      - envs/env
+      - envs/wishlist.env
     links:
       - backend
 #    command: "yarn start"
-    command:  bash -c "while true; do foo; sleep 2; done"
+    command:  bash -c "while true; do foo; sleep 20; done"
+
+  broker:
+    image: rabbitmq:3.8
+    env_file:
+      - envs/wishlist.env
+    ports:
+      - 5672:5672
 
 
 volumes:

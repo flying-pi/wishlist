@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'wishlist_backend',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -119,3 +121,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CELERY_BROKER_URL = os.environ['CELERY_BROKER']
+CELERY_CREATE_MISSING_QUEUES = True
+CELERY_DEFAULT_QUEUE = 'wishlist_backend'
+CELERY_TASK_DEFAULT_QUEUE = CELERY_DEFAULT_QUEUE
+CELERY_TIMEZONE = 'UTC'
+

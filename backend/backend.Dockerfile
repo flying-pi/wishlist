@@ -5,6 +5,8 @@ RUN mkdir /app
 
 WORKDIR /app
 
-COPY ./requarements.txt /app/requarements.txt
+RUN /bin/bash -c "apt-get update && apt-get install -y postgresql-client"
 
-RUN pip install -r /app/requarements.txt
+COPY ./requarements.txt /tmp/requarements.txt
+
+RUN pip install -r /tmp/requarements.txt

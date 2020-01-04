@@ -2,3 +2,7 @@ Django==3.0.1
 ipython==7.10.2
 pydevd-pycharm~=192.7142.42
 psycopg2==2.8.4
+celery==4.4.0
+ipdb==0.12.3
+djangorestframework==3.11.0
+django-filter==2.2.0
