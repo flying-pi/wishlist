@@ -14,13 +14,17 @@ services:
       context: ./backend
       dockerfile: backend.Dockerfile
     ports:
-      - "8080:8080"
+      - "8080"
     volumes:
       - ./backend:/app
+      - media:/media
     env_file:
       - envs/wishlist.env
-#    command: "./manage.py runserver 0.0.0.0:8080"
-    command: bash -c "while true; do foo; sleep 20; done"
+    command: >
+      bash -c "
+       ./manage.py migrate
+       ./manage.py runserver 0.0.0.0:8080
+      "
     links:
       - db
       - backend_worker
@@ -38,22 +42,24 @@ services:
       celery worker --beat --app=wishlist_backend.celery_app --concurrency=4 --hostname=backend_worker@%h --loglevel=INFO
       "
 
-
   front:
     image: wishlist/front
     build:
       context: ./front
       dockerfile: front.Dockerfile
     ports:
-      - "3000:3000"
+      - "3000"
     volumes:
       - ./front/wishlist_front:/app
     env_file:
       - envs/wishlist.env
     links:
       - backend
-#    command: "yarn start"
-    command:  bash -c "while true; do foo; sleep 20; done"
+    command: >
+      bash -c "
+        yarn &&
+        yarn start
+      "
 
   broker:
     image: rabbitmq:3.8
@@ -62,6 +68,22 @@ services:
     ports:
       - 5672:5672
 
+  proxy:
+    image: nginx:latest
+    depends_on:
+      - front
+      - backend
+    expose:
+      - "8080"
+      - "3000"
+    ports:
+      - "8080:8080"
+      - "3000:3000"
+    volumes:
+      - ./nginx/nginx.default.conf:/etc/nginx/conf.d/web.conf
+      - media:/media
 
 volumes:
   pgdata:
+  media:
+

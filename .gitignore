@@ -70,3 +70,5 @@ private_key.json
 env/agricam.env
 node_modules
 .DS_Store
+
+**/celerybeat**

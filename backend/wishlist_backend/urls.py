@@ -13,12 +13,25 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 
+import wishlist_backend.views as wl_views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls'))
-
+    url(r'^api-auth/', include('rest_framework.urls')),
+    path('api/v1/signup/', wl_views.signup),
+    path('api/v1/confirm/email/<str:token>', wl_views.mail_confirmation, name='email_confirmation'),
+    path('api/v1/login/', wl_views.login),
+    path('api/v1/user/info/', wl_views.user_info),
+    path('api/v1/upload_image', wl_views.upload_image),
+    path('api/v1/wish/list/<str:user_key>', wl_views.WishList.as_view()),
+    path('api/v1/wish/detail/<int:pk>', wl_views.WishDetail.as_view()),
+    path('api/v1/wish/detail/', wl_views.WishDetail.as_view()),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

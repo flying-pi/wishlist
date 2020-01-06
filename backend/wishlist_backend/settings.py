@@ -15,7 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -25,8 +24,12 @@ SECRET_KEY = ')5l!$!ewu@vxyfai4dnc1b@#7^os%y7!2v)_z9n+9z$f^4!eu('
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+ROOT_URL = os.environ.get('BACKEND_URL')
+FRONT_URL = os.environ.get('FRONT_UTL')
+
+APPEND_SLASH = True
 
 # Application definition
 
@@ -37,8 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'wishlist_backend',
     'rest_framework',
+    'rest_framework.authtoken',
+    'wishlist_backend',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +75,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wishlist_backend.wsgi.application'
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -82,7 +85,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -102,7 +104,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
@@ -116,7 +117,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
@@ -128,3 +128,17 @@ CELERY_DEFAULT_QUEUE = 'wishlist_backend'
 CELERY_TASK_DEFAULT_QUEUE = CELERY_DEFAULT_QUEUE
 CELERY_TIMEZONE = 'UTC'
 
+EMAIL_HOST = 'smtp.mailtrap.io'
+EMAIL_HOST_USER = 'cf2ec1c52cedeb'
+EMAIL_HOST_PASSWORD = 'd3c606b7cfc520'
+EMAIL_PORT = '2525'
+EMAIL_ADMIN_MAIL = 'admin@example.com'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
+}
+
+MEDIA_ROOT = '/media/'
+MEDIA_URL = 'media/'
